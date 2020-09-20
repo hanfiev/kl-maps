@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amenities Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js">
+    </script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+        type="text/css" />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="sidebar-menu">
+        <div class="icon"><i data-feather="check-circle"></i></div>
+        <div class="icon active"><i data-feather="check-circle"></i></div>
+        <div class="icon"><i data-feather="check-circle"></i></div>
+    </div>
+    <div class="container">
+        <div class="title-bar">
+            <div class="title">Amenities Explorer</div>
+        </div>
+        <br>
+
+    </div>
+    <div class="container">
+
+        <div id="map"></div><br>
+
+        <div id="info">
+            <div class="overview">
+                <div id="placeName">Tiara Mutiara 2</div>
+                <div id="placeCoord">[1125125,125125]</div>
+                <div id="roadLabel">Jalan Puchong, Taman Kuchai, 58200 Kuala Lumpur,
+                    Malaysia</div>
+
+                <br>
+
+                <div style="text-transform: uppercase; font-size:9pt; font-weight: 600;">Overview Info</div>
+                <hr>
+                <div id="overviewCheck">
+                    <div class="checklist">
+                        <div class="object">Surrounding Amenities</div>
+                        <div class="status tooltip"><i data-feather="check-circle"></i> <span class="tooltiptext">This
+                                place meets the standard amenities</span></div>
+                    </div>
+                    <div class="checklist">
+                        <div class="object">Food Access</div>
+                        <div class="status tooltip"><i data-feather="check-circle"></i> <span class="tooltiptext">This
+                                place surrounded by several food provider</span></div>
+                    </div>
+                    <div class="checklist">
+                        <div class="object">Water Disurption Area</div>
+                        <div class="status tooltip"><i data-feather="alert-triangle"></i> <span class="tooltiptext">This
+                                facility is located on KL water disruption area</span></div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <div
+                style="color:#312A65;margin-top: 20px;text-transform: uppercase;font-size: 10pt;font-weight: 700;letter-spacing: 0.08em;">
+                Nearby Facility
+            </div>
+            <div class="info-card">
+                <div class="title transit">transit<span>(2)</span></div>
+                <div id="result" style="display: none;">
+                    <div class="item">
+                        <div class="object">
+                            <span>600</span>
+                            <div class="transit-object">
+                                <div class="route">Puchong Utama</div>
+                                <div class="service">Rapid KL</div>
+                            </div>
+                        </div>
+                        <div class="distance">500 m</div>
+                    </div>
+                    <div class="item">
+                        <div class="object">
+                            <span style="background-color:green">SBK-6</span>
+                            <div class="transit-object">
+                                <div class="route">Dataran Merdeka</div>
+                                <div class="service">MRT</div>
+                            </div>
+                        </div>
+                        <div class="distance">500 m</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="title cstore">Convenience Store <span>(2)</span></div>
+                <div id="result" style="display: none;">
+
+                    <div class="item">
+                        <div class="object">KK Mart</div>
+                        <div class="distance">500 m</div>
+                    </div>
+                    <div class="item">
+                        <div class="object">7-Eleven</div>
+                        <div class="distance">500 m</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="title supermarket">Supermarket <span>(2)</span></div>
+                <div id="result" style="display: none;">
+
+                    <div class="item">
+                        <div class="object">NSK</div>
+                        <div class="distance">113 m</div>
+                    </div>
+                    <div class="item">
+                        <div class="object">AEON</div>
+                        <div class="distance">120 m</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="title foodstall">Food Stall <span>(2)</span></div>
+                <div id="result" style="display: none;">
+
+                    <div class="item">
+                        <div class="object">Mamak Kitchen</div>
+                        <div class="distance">86 m</div>
+                    </div>
+                    <div class="item">
+                        <div class="object">Kedai Murni</div>
+                        <div class="distance">162 m</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="info-card">
+                <div class="title clinic">Clinic <span>(2)</span></div>
+                <div id="result" style="display: none;">
+
+                    <div class="item">
+                        <div class="object">Health Medica</div>
+                        <div class="distance">160 m</div>
+                    </div>
+                    <div class="item">
+                        <div class="object">Healthcare Abadi</div>
+                        <div class="distance">560 m</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
+        integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5.1.6/turf.min.js"
+        integrity="sha256-Nhtik+K3xORhs5S9o0qlol4eRNB9O5OyTOJqbLucPk8=" crossorigin="anonymous"></script>
+
+    <script src="app.js"></script>
+    <script>
+        feather.replace()
+    </script>
+
+
+</body>
+
+</html>
