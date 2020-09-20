@@ -111,6 +111,11 @@ body {
     color: #8249FF;
 }
 
+.info-card>.atm {
+    background: rgba(29, 223, 142, 0.2);
+    color: #15ac9f;
+}
+
 .container {
     margin: 0px 10px 0px 60px;
     display: flex;

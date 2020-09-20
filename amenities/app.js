@@ -1,10 +1,34 @@
 //load data
 
+var itemName = ['0-apartment', '1-atm', '2-clinic', '3-convenience_store', '4-supermarket'];
+var items = [];
+var itemsData = [];
+var tempCoordArr = [0, 1];
+
 function fetchData(name) {
-    fetch('data/' + name + '.json')
+    fetch('data/' + name + '.geojson')
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => items.push(data));
 }
+
+function fetchAllData() {
+    // fetch all data and assign it to geojson point data
+
+    // for (i = 0; i < itemName.length; i++) {
+    //     setTimeout(fetchData(itemName[i]), i * 10000);
+    // }
+
+    for (i = 0; i < itemName.length; i++) {
+        let name = itemName[i]
+        setTimeout(function (name) {
+            fetch('data/' + name + '.geojson')
+                .then(response => response.json())
+                .then(data => items.push(data));
+        }, i * 500, name);
+    }
+
+}
+
 
 
 var acc = document.getElementsByClassName("title");
@@ -123,6 +147,8 @@ var pulsingDot = {
 
 map.on('load', function () {
 
+    fetchAllData()
+
     //circle
     map.addSource('circle', {
         'type': 'geojson',
@@ -209,6 +235,31 @@ map.on('load', function () {
 
 });
 
+var apartmentWithin = {},
+    atmWithin = {},
+    clinicWithin = {},
+    cstoreWithin = {},
+    supermarketWithin = {};
+
+var withinItem = [apartmentWithin, atmWithin, clinicWithin, cstoreWithin, supermarketWithin]
+
+function withinData() {
+    for (i = 0; i < withinItem.length; i++) {
+        withinItem[i] = {}
+        withinItem[i] = turf.pointsWithinPolygon(items[i], circle);
+    }
+}
+
+
+function loadData() {
+    // generate source
+    for (i = 0; i < itemName.length; i++) {
+        map.addSource(itemName[i], {
+            'type': 'geojson',
+            'data': witihinItem[i]
+        });
+    }
+}
 
 map.on('click', function (e) {
     center = [e.lngLat.lng, e.lngLat.lat]
@@ -226,21 +277,53 @@ map.on('click', function (e) {
     map.getSource('points').setData(data);
     drawCircle();
     document.getElementById('placeCoord').innerHTML = center;
+    withinData();
 })
 
-var radius = '';
-var options = {};
 var circle = '';
 
 function drawCircle() {
-    radius = 5;
-    options = {
+    let radius = 1;
+    let options = {
         steps: 100,
         units: 'kilometers',
 
     };
     circle = turf.circle(center, radius, options);
     map.getSource('circle').setData(circle)
+
+
+}
+
+function displayResults() {
+
+    //ATM
+
+    let elementID = ['apartment', 'atm', 'clinic', 'cstore', 'supermarket']
+    for (i = 0; i < elementID.length; i++) {
+        document.getElementById(elementID[i]).innerHTML = ''
+
+        for (j = 0; j < withinItem[i].features.length; j++) {
+            let base = withinItem[i].features[j].properties
+
+            let item = document.createElement('div');
+            item.className = 'item';
+
+            let object = document.createElement('div');
+            object.className = 'object';
+            object.innerHTML = base.name;
+
+            let distance = document.createElement('distance');
+            distance.className = 'distance';
+            distance.innerHTML = '300 m'
+
+            item.appendChild(object);
+            item.appendChild(distance);
+            document.getElementById(elementID[i]).appendChild(item);
+        }
+
+    }
+
 
 
 }
