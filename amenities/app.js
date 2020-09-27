@@ -5,17 +5,19 @@
 // [2] CStore
 // [3] Supermarket
 // [4] Foodstall
+// [5] Train
 
-var amenitiesID = ['atm', 'clinic', 'cstore', 'supermarket', 'foodstall']
-var itemColor = ['#2B255C', '#8249FF', '#FEB800', '#FC3365', '#00CC88']
+var amenitiesID = ['atm', 'clinic', 'cstore', 'supermarket', 'foodstall', 'transit']
+var itemColor = ['#2B255C', '#8249FF', '#FEB800', '#FC3365', '#00CC88', '#ffffff']
 var itemName = [],
     withinItem = [],
     items = [],
     lenVar = [];
+// train = '';
 
 
 for (i = 0; i < amenitiesID.length; i++) {
-    itemName.push(i + 1 + "-" + amenitiesID[i]) //ini buat generate nama file
+    itemName.push(i + "-" + amenitiesID[i]) //ini buat generate nama file
     lenVar.push(amenitiesID[i] + "Len") //ini buat generate var buat ngubah jumlah
 }
 
@@ -28,6 +30,11 @@ function fetchAllData() {
                 .then(data => items.push(data));
         }, i * 500, name);
     }
+
+    // fetch('data/train.geojson')
+    //     .then(response => response.json())
+    //     .then(data => train = data)
+
 }
 
 var acc = document.getElementsByClassName("title");
@@ -263,6 +270,36 @@ function withinData() {
 
 
 function generateMapLayer() {
+    //for transit
+    // map.addSource('train', {
+    //     'type': 'geojson',
+    //     'data': {
+    //         'type': 'FeatureCollection',
+    //         'features': [{
+    //             'type': 'Feature',
+    //             'geometry': {
+    //                 'type': 'Polygon',
+    //                 'coordinates': [
+    //                     [
+
+    //                     ]
+    //                 ]
+    //             }
+    //         }]
+    //     }
+    // });
+
+    // map.addLayer({
+    //     'id': 'train',
+    //     'type': 'circle',
+    //     'source': 'train',
+    //     'paint': {
+    //         'circle-color': '#327ba8',
+    //         'circle-radius': 7
+    //     }
+    // })
+
+
     // generate source
     for (i = 0; i < itemName.length; i++) {
         map.addSource(itemName[i], {
@@ -314,9 +351,9 @@ map.on('click', function (e) {
     $('#results').show(500)
     $('#surroundingAmenities').show(500)
 
+    document.getElementById('placeCoord').innerHTML = e.lngLat.lng.toFixed(5) + ", " + e.lngLat.lat.toFixed(5);
     map.getSource('points').setData(data);
     drawCircle();
-    document.getElementById('placeCoord').innerHTML = e.lngLat.lng.toFixed(5) + ", " + e.lngLat.lat.toFixed(5);
     withinData();
     measureDistance()
     updateLen()
@@ -357,13 +394,16 @@ function measureDistance() {
         sortbase.sort((a, b) => a.properties.distance - b.properties.distance)
     }
 
-    redrawResults()
+    redrawResults() //special treatment buat tab yang transit karena beda format
     withinDataUpdate()
 }
 
 function redrawResults() {
 
-    for (i = 0; i < amenitiesID.length; i++) {
+
+
+
+    for (i = 0; i < amenitiesID.length - 1; i++) {
         document.getElementById(amenitiesID[i]).innerHTML = ''
 
         if (withinItem[i].features.length <= 5) {
@@ -407,7 +447,47 @@ function redrawResults() {
             }
         }
 
+    }
+    //for transit
+    document.getElementById(amenitiesID[5]).innerHTML = ''
+    for (k = 0; k < withinItem[5].features.length; k++) {
+        let base = withinItem[5].features[k].properties
 
+        let item = document.createElement('div');
+        item.className = 'item';
+
+        let object = document.createElement('div');
+        object.className = 'object';
+
+        let distance = document.createElement('distance');
+        distance.className = 'distance';
+        distance.innerHTML = base.distance.toFixed(2) * 1000 + ' m'
+
+        let span = document.createElement('span');
+        span.innerHTML = base.station_id
+
+        let transitObject = document.createElement('div')
+        transitObject.className = 'transit-object'
+
+        let transitRoute = document.createElement('div')
+        transitRoute.className = 'route'
+        transitRoute.innerHTML = base.name
+
+        let transitService = document.createElement('div')
+        transitService.className = 'service'
+        transitService.innerHTML = base.mode
+
+        transitObject.appendChild(transitRoute)
+        transitObject.appendChild(transitService)
+
+        object.appendChild(span)
+        object.appendChild(transitObject)
+
+        item.appendChild(object)
+        item.appendChild(distance)
+
+
+        document.getElementById(amenitiesID[5]).appendChild(item);
     }
 }
 
