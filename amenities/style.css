@@ -36,13 +36,14 @@ body {
 
 
 .sidebar-menu>.active {
-    background-color: #1465AE;
+    background-color: #177DD9;
 }
 
 
 
 .sidebar-menu>.icon:hover {
     background-color: #177DD9;
+    cursor: pointer;
 }
 
 .sidebarTitle {
