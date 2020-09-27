@@ -484,3 +484,74 @@ function mapReturn() {
         document.getElementById(lenVar[i]).innerHTML = '';
     }
 }
+
+
+
+//SEARCH
+
+function fetchGeocode(searchQuery) {
+    let baseurl = 'https://us1.locationiq.com/v1/search.php?key=pk.f7842b4cd12bb3400a2e5b6390dd2a2c&q=' + searchQuery + '&countrycodes=my&format=json'
+
+    fetch(baseurl)
+        .then(response => response.json())
+        .then(data => geocodeResults(data))
+}
+
+function geocodeResults(data) {
+    let lat = data[0].lat;
+    let lon = data[0].lon;
+    let displayName = data[0].display_name;
+
+    console.log(lon, lat, displayName)
+
+    searchResults(lon, lat, displayName);
+
+
+}
+
+function searchBtn() {
+    let searchQuery = $("#locationSearch").val()
+    fetchGeocode(searchQuery)
+}
+
+// Get the input field
+var input = document.getElementById("locationSearch");
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function (event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("searchBtn").click();
+    }
+});
+
+
+function searchResults(lon, lat, displayName) {
+    center = [lon, lat]
+    let data = {
+        'type': 'FeatureCollection',
+        'features': [{
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': center
+            }
+        }]
+    }
+
+    $('#intro').hide(500)
+    $('#results').show(500)
+    $('#surroundingAmenities').show(500)
+
+    map.getSource('points').setData(data);
+    drawCircle();
+    document.getElementById('placeCoord').innerHTML = displayName;
+    withinData();
+    measureDistance()
+    updateLen()
+    mapZoom()
+    $("#locationSearch").val("")
+}

@@ -346,6 +346,10 @@ body {
 
 /* end tooltip */
 
+#message {
+    font-size: 11pt;
+}
+
 /* input */
 input[type=text] {
     width: 100%;
@@ -378,4 +382,32 @@ input[type=text]::placeholder {
     vertical-align: middle;
     margin-left: 10px;
     line-height: 65px;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    color: #FFFFFF;
+    background-color: #ff5e61;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #fa7476;
+}
+
+button:active {
+    background-color: #fd595b;
 }

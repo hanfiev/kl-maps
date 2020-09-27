@@ -23,9 +23,9 @@
 
 <body>
     <div class="sidebar-menu">
-        <div class="icon"><i data-feather="check-circle"></i></div>
-        <div class="icon active"><i data-feather="check-circle"></i></div>
-        <div class="icon"><i data-feather="check-circle"></i></div>
+        <div class="icon"><i data-feather="briefcase"></i></div>
+        <div class="icon active"><i data-feather="home"></i></div>
+        <div class="icon"><i data-feather="info"></i></div>
     </div>
     <div class="container">
         <div class="title-bar">
@@ -41,13 +41,16 @@
         <div id="info">
             <div class="overview">
                 <div id="intro" style="margin-bottom: 10px;">
-                    <div id="message">Select or search a location to check its
+                    <div id="message">Select a location by tapping directly on the map or by searching the place name to
+                        check its
                         surrounding amenities</div>
                     <br>
                     <div id="searchbox">
                         <div class="searchIcon"><i data-feather="search"></i></div>
                         <input type="text" id="locationSearch" name="locationSearch" placeholder="Search a location">
                     </div>
+                    <br>
+                    <button id="searchBtn" onclick="searchBtn()">Search</button>
                 </div>
                 <div id="results" style="display: none;">
                     <!-- <div id="placeName">Tiara Mutiara 2</div> -->
