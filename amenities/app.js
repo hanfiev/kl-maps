@@ -321,6 +321,7 @@ map.on('click', function (e) {
     measureDistance()
     updateLen()
     mapZoom()
+    checkOverview()
 })
 
 var circle = '';
@@ -431,6 +432,29 @@ function checkOverview() {
         lenBool.push(withinItem[i].features.length >= 1)
     }
     console.log(lenBool[0] && lenBool[1])
+
+    let saOverview = lenBool[0] && lenBool[1] && lenBool[2]
+    let faOverview = lenBool[3] || lenBool[4]
+
+    let icon = ['alert-triangle', 'check-circle']
+    console.log(saOverview)
+
+
+    if (saOverview) {
+        $('#saOverview').html('<i data-feather="check-circle"></i><span class="tooltiptext">This place meets the standard amenities</span>')
+    } else {
+        $('#saOverview').html('<i data-feather=alert-triangle></i><span class="tooltiptext">This place have not meets the standard amenities</span>')
+        console.log("salah")
+    }
+
+    if (faOverview) {
+        $('#faOverview').html('<i data-feather="check-circle"></i><span class="tooltiptext">This place surrounded by food provider</span>')
+    } else {
+        $('#faOverview').html('<i data-feather=alert-triangle></i><span class="tooltiptext">This place is not surrounded by food provider</span>')
+        console.log("salah")
+    }
+
+    feather.replace()
 }
 
 function mapZoom() {
@@ -553,5 +577,6 @@ function searchResults(lon, lat, displayName) {
     measureDistance()
     updateLen()
     mapZoom()
+    checkOverview()
     $("#locationSearch").val("")
 }
