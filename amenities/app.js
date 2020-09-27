@@ -7,7 +7,7 @@
 // [4] Foodstall
 
 var amenitiesID = ['atm', 'clinic', 'cstore', 'supermarket', 'foodstall']
-var itemColor = ['#01ab46', '#26588a', '#530359', '#43c3e6', '#fc0394']
+var itemColor = ['#2B255C', '#8249FF', '#FEB800', '#FC3365', '#00CC88']
 var itemName = [],
     withinItem = [],
     items = [],
