@@ -1,23 +1,25 @@
 //load data
 
-var itemName = ['0-apartment', '1-atm', '2-clinic', '3-convenience_store', '4-supermarket'];
-var items = [];
-var itemsData = [];
-var tempCoordArr = [0, 1];
+// [0] ATM
+// [1] Clinic
+// [2] CStore
+// [3] Supermarket
+// [4] Foodstall
 
-function fetchData(name) {
-    fetch('data/' + name + '.geojson')
-        .then(response => response.json())
-        .then(data => items.push(data));
+var amenitiesID = ['atm', 'clinic', 'cstore', 'supermarket', 'foodstall']
+var itemColor = ['#01ab46', '#26588a', '#530359', '#43c3e6', '#fc0394']
+var itemName = [],
+    withinItem = [],
+    items = [],
+    lenVar = [];
+
+
+for (i = 0; i < amenitiesID.length; i++) {
+    itemName.push(i + 1 + "-" + amenitiesID[i]) //ini buat generate nama file
+    lenVar.push(amenitiesID[i] + "Len") //ini buat generate var buat ngubah jumlah
 }
 
 function fetchAllData() {
-    // fetch all data and assign it to geojson point data
-
-    // for (i = 0; i < itemName.length; i++) {
-    //     setTimeout(fetchData(itemName[i]), i * 10000);
-    // }
-
     for (i = 0; i < itemName.length; i++) {
         let name = itemName[i]
         setTimeout(function (name) {
@@ -26,10 +28,7 @@ function fetchAllData() {
                 .then(data => items.push(data));
         }, i * 500, name);
     }
-
 }
-
-
 
 var acc = document.getElementsByClassName("title");
 
@@ -51,7 +50,6 @@ for (i = 0; i < acc.length; i++) {
     });
 }
 
-
 // map
 var center = [101.693207, 3.140853] // starting position [lng, lat]
 
@@ -63,12 +61,6 @@ var map = new mapboxgl.Map({
     zoom: 12 // starting zoom
 });
 
-map.addControl(
-    new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
-    })
-);
 
 
 //dot
@@ -208,58 +200,102 @@ map.on('load', function () {
         }
     });
 
-    //atm
+    generateMapLayer()
 
-    map.addSource('atm', {
-        'type': 'geojson',
-        'data': {
-            'type': 'FeatureCollection',
-            'features': [{
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [0, 0]
-                }
-            }]
+    // Insert the layer beneath any symbol layer.
+    var layers = map.getStyle().layers;
+
+    var labelLayerId;
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+            labelLayerId = layers[i].id;
+            break;
         }
-    });
+    }
+
     map.addLayer({
-        'id': 'atm',
-        'type': 'symbol',
-        'source': 'atm',
-        'layout': {
-            'icon-image': 'pulsing-dot'
-        }
-    });
+            'id': '3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 15,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+
+                // use an 'interpolate' expression to add a smooth transition effect to the
+                // buildings as the user zooms in
+                'fill-extrusion-height': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'height']
+                ],
+                'fill-extrusion-base': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'min_height']
+                ],
+                'fill-extrusion-opacity': 0.6
+            }
+        },
+        labelLayerId
+    );
 
 
 });
 
-var apartmentWithin = {},
-    atmWithin = {},
-    clinicWithin = {},
-    cstoreWithin = {},
-    supermarketWithin = {};
-
-var withinItem = [apartmentWithin, atmWithin, clinicWithin, cstoreWithin, supermarketWithin]
+var withinItem = []
 
 function withinData() {
-    for (i = 0; i < withinItem.length; i++) {
+    for (i = 0; i < items.length; i++) {
         withinItem[i] = {}
         withinItem[i] = turf.pointsWithinPolygon(items[i], circle);
     }
 }
 
 
-function loadData() {
+function generateMapLayer() {
     // generate source
     for (i = 0; i < itemName.length; i++) {
         map.addSource(itemName[i], {
             'type': 'geojson',
-            'data': witihinItem[i]
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [{
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [
+                            [
+
+                            ]
+                        ]
+                    }
+                }]
+            }
         });
+
+        map.addLayer({
+            'id': itemName[i],
+            'type': 'circle',
+            'source': itemName[i],
+            'paint': {
+                'circle-color': itemColor[i],
+                'circle-radius': 7
+            }
+        })
     }
 }
+
+
 
 map.on('click', function (e) {
     center = [e.lngLat.lng, e.lngLat.lat]
@@ -274,16 +310,23 @@ map.on('click', function (e) {
         }]
     }
 
+    $('#intro').hide(500)
+    $('#results').show(500)
+    $('#surroundingAmenities').show(500)
+
     map.getSource('points').setData(data);
     drawCircle();
-    document.getElementById('placeCoord').innerHTML = center;
+    document.getElementById('placeCoord').innerHTML = e.lngLat.lng.toFixed(5) + ", " + e.lngLat.lat.toFixed(5);
     withinData();
+    measureDistance()
+    updateLen()
+    mapZoom()
 })
 
 var circle = '';
 
 function drawCircle() {
-    let radius = 1;
+    let radius = 0.5;
     let options = {
         steps: 100,
         units: 'kilometers',
@@ -291,39 +334,153 @@ function drawCircle() {
     };
     circle = turf.circle(center, radius, options);
     map.getSource('circle').setData(circle)
-
-
 }
 
-function displayResults() {
+function measureDistance() {
 
-    //ATM
-
-    let elementID = ['apartment', 'atm', 'clinic', 'cstore', 'supermarket']
-    for (i = 0; i < elementID.length; i++) {
-        document.getElementById(elementID[i]).innerHTML = ''
+    for (i = 0; i < amenitiesID.length; i++) {
+        document.getElementById(amenitiesID[i]).innerHTML = ''
 
         for (j = 0; j < withinItem[i].features.length; j++) {
             let base = withinItem[i].features[j].properties
 
-            let item = document.createElement('div');
-            item.className = 'item';
-
-            let object = document.createElement('div');
-            object.className = 'object';
-            object.innerHTML = base.name;
-
-            let distance = document.createElement('distance');
-            distance.className = 'distance';
-            distance.innerHTML = '300 m'
-
-            item.appendChild(object);
-            item.appendChild(distance);
-            document.getElementById(elementID[i]).appendChild(item);
+            //measure distance
+            let from = turf.point(center);
+            let to = turf.point([base.longitude, base.latitude]);
+            let options = {
+                units: 'kilometers'
+            };
+            base.distance = turf.distance(from, to, options);
         }
-
+        let sortbase = withinItem[i].features
+        sortbase.sort((a, b) => a.properties.distance - b.properties.distance)
     }
 
+    redrawResults()
+    withinDataUpdate()
+}
+
+function redrawResults() {
+
+    for (i = 0; i < amenitiesID.length; i++) {
+        document.getElementById(amenitiesID[i]).innerHTML = ''
+
+        if (withinItem[i].features.length <= 5) {
+            for (j = 0; j < withinItem[i].features.length; j++) {
+
+                let base = withinItem[i].features[j].properties
+
+                let item = document.createElement('div');
+                item.className = 'item';
+
+                let object = document.createElement('div');
+                object.className = 'object';
+                object.innerHTML = base.name;
+
+                let distance = document.createElement('distance');
+                distance.className = 'distance';
+                distance.innerHTML = base.distance.toFixed(2) * 1000 + ' m'
+
+                item.appendChild(object);
+                item.appendChild(distance);
+                document.getElementById(amenitiesID[i]).appendChild(item);
+            }
+        } else {
+            for (j = 0; j < 5; j++) {
+                let base = withinItem[i].features[j].properties
+
+                let item = document.createElement('div');
+                item.className = 'item';
+
+                let object = document.createElement('div');
+                object.className = 'object';
+                object.innerHTML = base.name;
+
+                let distance = document.createElement('distance');
+                distance.className = 'distance';
+                distance.innerHTML = base.distance.toFixed(2) * 1000 + ' m'
+
+                item.appendChild(object);
+                item.appendChild(distance);
+                document.getElementById(amenitiesID[i]).appendChild(item);
+            }
+        }
 
 
+    }
+}
+
+function withinDataUpdate() {
+    for (i = 0; i < itemName.length; i++) {
+        map.getSource(itemName[i]).setData(withinItem[i]);
+    }
+}
+
+function updateLen() {
+    for (i = 0; i < lenVar.length; i++) {
+        document.getElementById(lenVar[i]).innerHTML = "(" + withinItem[i].features.length + ")";
+    }
+}
+
+//TODO bikin kategorisasi surrounding amenities & food access
+
+function checkOverview() {
+    // convert arrLen to Boolean
+    let lenBool = []
+    for (i = 0; i < withinItem.length; i++) {
+        lenBool.push(withinItem[i].features.length >= 1)
+    }
+    console.log(lenBool[0] && lenBool[1])
+}
+
+function mapZoom() {
+    map.flyTo({
+        // These options control the ending camera position: centered at
+        // the target, at zoom level 9, and north up.
+        center: center,
+        zoom: 16,
+        bearing: 15,
+        pitch: 30,
+        speed: 0.5
+    })
+}
+
+function mapReturn() {
+    $('#intro').show(500)
+    $('#results').hide(500)
+    $('#surroundingAmenities').hide(500)
+
+
+    map.flyTo({
+        // These options control the ending camera position: centered at
+        // the target, at zoom level 9, and north up.
+        center: center,
+        zoom: 12,
+        bearing: 0,
+        pitch: 0
+    })
+
+    let emptyData = {
+        'type': 'FeatureCollection',
+        'features': [{
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
+                    [
+
+                    ]
+                ]
+            }
+        }]
+    }
+
+    map.getSource('circle').setData(emptyData)
+    for (i = 0; i < itemName.length; i++) {
+        map.getSource(itemName[i]).setData(emptyData)
+    }
+    for (i = 0; i < amenitiesID.length; i++) {
+        document.getElementById(amenitiesID[i]).innerHTML = '';
+        document.getElementById(lenVar[i]).innerHTML = '';
+    }
 }

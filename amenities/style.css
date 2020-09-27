@@ -45,6 +45,15 @@ body {
     background-color: #177DD9;
 }
 
+.sidebarTitle {
+    color: #312A65;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
 .header {
     width: 100%
 }
@@ -169,13 +178,43 @@ body {
 
 #placeCoord {
     font-weight: 400;
-    font-size: 10pt;
-    margin-bottom: 10px
+    font-size: 12pt;
+    margin-bottom: 10px;
+    /* background-color: #201958; */
+    /* padding: 15px; */
 }
 
 #roadLabel {
     margin-bottom: 10px;
     font-size: 10pt;
+}
+
+.resultCoord {
+    display: flex;
+    background-color: #514a8a;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 11px 10px 2px 10px;
+    border-radius: 5px;
+    vertical-align: middle;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+}
+
+.resultCoord>.object {
+    align-items: flex-start;
+    vertical-align: auto;
+    font-size: 9pt;
+    width: 70%;
+    font-weight: bold;
+}
+
+.resultCoord>.status {
+    align-items: flex-end;
+    width: 30%;
+    text-align: right;
+    cursor: pointer;
+
+
 }
 
 .checklist {
@@ -306,3 +345,37 @@ body {
 }
 
 /* end tooltip */
+
+/* input */
+input[type=text] {
+    width: 100%;
+    height: 50px;
+    padding-left: 45px;
+    margin: auto;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    color: #FFFFFF;
+    background-color: #3c3377;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12pt;
+}
+
+input[type=text]:focus {
+    outline: none;
+    background-color: #4a3dad;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+
+}
+
+input[type=text]::placeholder {
+    color: #ffffff8e
+}
+
+.searchIcon {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    line-height: 65px;
+}

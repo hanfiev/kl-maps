@@ -40,135 +40,154 @@
 
         <div id="info">
             <div class="overview">
-                <div id="placeName">Tiara Mutiara 2</div>
-                <div id="placeCoord">[1125125,125125]</div>
-                <div id="roadLabel">Jalan Puchong, Taman Kuchai, 58200 Kuala Lumpur,
-                    Malaysia</div>
-
-                <br>
-
-                <div style="text-transform: uppercase; font-size:9pt; font-weight: 600;">Overview Info</div>
-                <hr>
-                <div id="overviewCheck">
-                    <div class="checklist">
-                        <div class="object">Surrounding Amenities</div>
-                        <div class="status tooltip"><i data-feather="check-circle"></i> <span class="tooltiptext">This
-                                place meets the standard amenities</span></div>
+                <div id="intro" style="margin-bottom: 10px;">
+                    <div id="message">Select or search a location to check its
+                        surrounding amenities</div>
+                    <br>
+                    <div id="searchbox">
+                        <div class="searchIcon"><i data-feather="search"></i></div>
+                        <input type="text" id="locationSearch" name="locationSearch" placeholder="Search a location">
                     </div>
-                    <div class="checklist">
-                        <div class="object">Food Access</div>
-                        <div class="status tooltip"><i data-feather="check-circle"></i> <span class="tooltiptext">This
-                                place surrounded by several food provider</span></div>
-                    </div>
-                    <div class="checklist">
-                        <div class="object">Water Disurption Area</div>
-                        <div class="status tooltip"><i data-feather="alert-triangle"></i> <span class="tooltiptext">This
-                                facility is located on KL water disruption area</span></div>
-                    </div>
-
                 </div>
+                <div id="results" style="display: none;">
+                    <!-- <div id="placeName">Tiara Mutiara 2</div> -->
+                    <!-- <div id="placeCoord">[1125125,125125]</div> -->
+                    <!-- <div id="roadLabel">Jalan Puchong, Taman Kuchai, 58200 Kuala Lumpur,Malaysia</div> -->
+                    Location Details
+                    <div id="returnSearch" class="resultCoord">
+                        <div id="placeCoord" class="object"></div>
+                        <div onclick="mapReturn()" class="status"><i data-feather="x"></i> </div>
+                    </div>
 
+                    <br>
 
-
-            </div>
-
-            <div
-                style="color:#312A65;margin-top: 20px;text-transform: uppercase;font-size: 10pt;font-weight: 700;letter-spacing: 0.08em;">
-                Nearby Facility
-            </div>
-            <div class="info-card">
-                <div class="title transit">transit<span>(2)</span></div>
-                <div id="transit" style="display: none;">
-                    <div class="item">
-                        <div class="object">
-                            <span>600</span>
-                            <div class="transit-object">
-                                <div class="route">Puchong Utama</div>
-                                <div class="service">Rapid KL</div>
-                            </div>
+                    <div style="text-transform: uppercase; font-size:9pt; font-weight: 600;">Overview Info</div>
+                    <hr>
+                    <div id="overviewCheck">
+                        <div class="checklist">
+                            <div class="object">Surrounding Amenities</div>
+                            <div class="status tooltip"><i data-feather="check-circle"></i> <span
+                                    class="tooltiptext">This
+                                    place meets the standard amenities</span></div>
                         </div>
-                        <div class="distance">500 m</div>
-                    </div>
-                    <div class="item">
-                        <div class="object">
-                            <span style="background-color:green">SBK-6</span>
-                            <div class="transit-object">
-                                <div class="route">Dataran Merdeka</div>
-                                <div class="service">MRT</div>
-                            </div>
+                        <div class="checklist">
+                            <div class="object">Food Access</div>
+                            <div class="status tooltip"><i data-feather="check-circle"></i> <span
+                                    class="tooltiptext">This
+                                    place surrounded by several food provider</span></div>
                         </div>
-                        <div class="distance">500 m</div>
-                    </div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="title cstore">Convenience Store <span>(2)</span></div>
-                <div id="cstore" style="display: none;">
+                        <div class="checklist">
+                            <div class="object">Water Disurption Area</div>
+                            <div class="status tooltip"><i data-feather="alert-triangle"></i> <span
+                                    class="tooltiptext">This
+                                    facility is located on KL water disruption area</span></div>
+                        </div>
 
-                    <div class="item">
-                        <div class="object">KK Mart</div>
-                        <div class="distance">500 m</div>
-                    </div>
-                    <div class="item">
-                        <div class="object">7-Eleven</div>
-                        <div class="distance">500 m</div>
-                    </div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="title supermarket">Supermarket <span>(2)</span></div>
-                <div id="supermarket" style="display: none;">
-
-                    <div class="item">
-                        <div class="object">NSK</div>
-                        <div class="distance">113 m</div>
-                    </div>
-                    <div class="item">
-                        <div class="object">AEON</div>
-                        <div class="distance">120 m</div>
-                    </div>
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="title foodstall">Food Stall <span>(2)</span></div>
-                <div id="apartment" style="display: none;">
-
-                    <div class="item">
-                        <div class="object">Mamak Kitchen</div>
-                        <div class="distance">86 m</div>
-                    </div>
-                    <div class="item">
-                        <div class="object">Kedai Murni</div>
-                        <div class="distance">162 m</div>
                     </div>
                 </div>
 
-            </div>
-            <div class="info-card">
-                <div class="title clinic">Clinic <span>(2)</span></div>
-                <div id="clinic" style="display: none;">
 
-                    <div class="item">
-                        <div class="object">Health Medica</div>
-                        <div class="distance">160 m</div>
-                    </div>
-                    <div class="item">
-                        <div class="object">Healthcare Abadi</div>
-                        <div class="distance">560 m</div>
+
+            </div>
+
+            <div id="surroundingAmenities" style="display: none;">
+                <div class="sidebarTitle">
+                    Nearby Facility
+                </div>
+                <div class="info-card">
+                    <div class="title transit">transit<span id="transitLength"></span></div>
+                    <div id="transit" style="display: none;">
+                        <div class="item">
+                            <div class="object">
+                                <span>600</span>
+                                <div class="transit-object">
+                                    <div class="route">Puchong Utama</div>
+                                    <div class="service">Rapid KL</div>
+                                </div>
+                            </div>
+                            <div class="distance">500 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">
+                                <span style="background-color:green">SBK-6</span>
+                                <div class="transit-object">
+                                    <div class="route">Dataran Merdeka</div>
+                                    <div class="service">MRT</div>
+                                </div>
+                            </div>
+                            <div class="distance">500 m</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="info-card">
-                <div class="title atm">ATM <span>(2)</span></div>
-                <div id="atm" style="display: none;">
+                <div class="info-card">
+                    <div class="title cstore">Convenience Store <span id="cstoreLen"></span></div>
+                    <div id="cstore" style="display: none;">
 
-                    <div class="item">
-                        <div class="object">Maybank KK</div>
-                        <div class="distance">160 m</div>
+                        <div class="item">
+                            <div class="object">KK Mart</div>
+                            <div class="distance">500 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">7-Eleven</div>
+                            <div class="distance">500 m</div>
+                        </div>
                     </div>
-                    <div class="item">
-                        <div class="object">RMB Bank</div>
-                        <div class="distance">560 m</div>
+                </div>
+                <div class="info-card">
+                    <div class="title supermarket">Supermarket <span id="supermarketLen"></span></div>
+                    <div id="supermarket" style="display: none;">
+
+                        <div class="item">
+                            <div class="object">NSK</div>
+                            <div class="distance">113 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">AEON</div>
+                            <div class="distance">120 m</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="title foodstall">Food Stall <span id="foodstallLen"></span></div>
+                    <div id="foodstall" style="display: none;">
+
+                        <div class="item">
+                            <div class="object">Mamak Kitchen</div>
+                            <div class="distance">86 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">Kedai Murni</div>
+                            <div class="distance">162 m</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="info-card">
+                    <div class="title clinic">Clinic <span id="clinicLen"></span></div>
+                    <div id="clinic" style="display: none;">
+
+                        <div class="item">
+                            <div class="object">Health Medica</div>
+                            <div class="distance">160 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">Healthcare Abadi</div>
+                            <div class="distance">560 m</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="title atm">ATM <span id="atmLen"></span></div>
+                    <div id="atm" style="display: none;">
+
+                        <div class="item">
+                            <div class="object">Maybank KK</div>
+                            <div class="distance">160 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">RMB Bank</div>
+                            <div class="distance">560 m</div>
+                        </div>
                     </div>
                 </div>
             </div>
