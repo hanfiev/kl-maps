@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amenities Explorer</title>
+    <title>Workplace to Transit</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
@@ -24,13 +24,13 @@
 <body>
     <div class="sidebar-menu">
         <br>
-        <div class="icon"><a href="../workplace-to-transit"><i data-feather="briefcase"></i></a></div>
-        <div class="icon active"><i data-feather="home"></i></div>
+        <div class="icon active"><i data-feather="briefcase"></i></div>
+        <div class="icon "><a href="../amenities"><i data-feather="home"></i></a></div>
         <div class="icon"><i data-feather="info"></i></div>
     </div>
     <div class="container">
         <div class="title-bar">
-            <div class="title">Amenities Explorer</div>
+            <div class="title">Workplace to Transit</div>
         </div>
         <br>
 
@@ -81,8 +81,8 @@
                                     place surrounded by several food provider</span></div>
                         </div>
                         <div class="checklist">
-                            <div class="object" style="color: #7E7E7E;">Water Disurption Area</div>
-                            <div class="status tooltip" style="color: #7E7E7E;"><i data-feather="info"></i> <span
+                            <div class="object">Water Disurption Area</div>
+                            <div class="status tooltip"><i data-feather="info"></i> <span
                                     class="tooltiptext">This information is not available yet</span></div>
                         </div>
 
@@ -100,7 +100,26 @@
                 <div class="info-card">
                     <div class="title transit">transit<span id="transitLen"></span></div>
                     <div id="transit" style="display: none;">
-                       
+                        <div class="item">
+                            <div class="object">
+                                <span>600</span>
+                                <div class="transit-object">
+                                    <div class="route">Puchong Utama</div>
+                                    <div class="service">Rapid KL</div>
+                                </div>
+                            </div>
+                            <div class="distance">500 m</div>
+                        </div>
+                        <div class="item">
+                            <div class="object">
+                                <span style="background-color:green">SBK-6</span>
+                                <div class="transit-object">
+                                    <div class="route">Dataran Merdeka</div>
+                                    <div class="service">MRT</div>
+                                </div>
+                            </div>
+                            <div class="distance">500 m</div>
+                        </div>
                     </div>
                 </div>
                 <div class="info-card">
@@ -186,7 +205,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5.1.6/turf.min.js"
         integrity="sha256-Nhtik+K3xORhs5S9o0qlol4eRNB9O5OyTOJqbLucPk8=" crossorigin="anonymous"></script>
 
-    <script src="../js/amenities.js"></script>
+    <script src="../js/workplace-to-transit.js"></script>
     <script>
         feather.replace()
     </script>

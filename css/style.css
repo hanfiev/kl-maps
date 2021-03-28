@@ -1,0 +1,423 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #F9FBFF;
+}
+
+
+
+.sidebar-menu {
+    width: 60px;
+    height: 100vh;
+    position: fixed;
+    background-color: #0087FF;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+
+
+.sidebar-menu>.icon {
+    /* background-color: #007FEF; */
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.icon>a {
+    text-decoration: none;
+    color: #ffffff
+}
+
+
+
+.sidebar-menu>.active {
+    background-color: #177DD9;
+}
+
+
+
+.sidebar-menu>.icon:hover {
+    background-color: #177DD9;
+    cursor: pointer;
+}
+
+.sidebarTitle {
+    color: #312A65;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.header {
+    width: 100%
+}
+
+.title-bar {
+    margin: 5px 15px 0px 15px;
+}
+
+.title {
+    /* Auto Layout */
+
+    background: rgba(0, 135, 255, 0.2);
+    color: #0087FF;
+
+    display: flex;
+    flex-direction: row;
+    padding: 10px 10px 0px 10px;
+
+    width: auto;
+    height: 25px;
+
+    border-radius: 3px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+}
+
+.title span {
+    text-align: right;
+
+
+}
+
+.info-card>.cstore {
+    color: #FEB800;
+    background: rgba(254, 184, 0, 0.2);
+}
+
+.info-card>.transit {
+    background: rgba(0, 135, 255, 0.2);
+    color: #0087FF;
+}
+
+.info-card>.supermarket {
+    background: rgba(252, 51, 101, 0.2);
+    color: #FC3365;
+}
+
+.info-card>.foodstall {
+    background: rgba(0, 204, 136, 0.2);
+    color: #00CC88;
+}
+
+.info-card>.clinic {
+    background: rgba(130, 73, 255, 0.2);
+    color: #8249FF;
+}
+
+.info-card>.atm {
+    background: rgba(184, 29, 223, 0.2);
+    color: #2B255C;
+}
+
+.container {
+    margin: 0px 10px 0px 60px;
+    display: flex;
+    width: auto;
+    padding: 5px 10px 5px 10px;
+
+}
+
+#map {
+    width: auto;
+    height: calc(100vh - 80px);
+    margin-left: 15px;
+    display: flex;
+    flex-grow: 1;
+    filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.07)), drop-shadow(0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198)), drop-shadow(0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275)), drop-shadow(0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035)), drop-shadow(0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725)), drop-shadow(0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802));
+    border-radius: 8px;
+}
+
+#info {
+    width: 320px;
+    height: calc(100vh - 80px);
+    margin-left: 15px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.info-detail {
+    overflow-y: auto;
+    height: calc(100vh - 464px);
+}
+
+
+.overview {
+    width: auto;
+    background-color: #312A65;
+    color: #ffffff;
+    padding: 25px 25px 10px 25px;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+    border-radius: 10px;
+
+}
+
+
+#placeName {
+    text-transform: uppercase;
+    font-size: 9pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+}
+
+#placeCoord {
+    font-weight: 400;
+    font-size: 12pt;
+    margin-bottom: 10px;
+    /* background-color: #201958; */
+    /* padding: 15px; */
+}
+
+#roadLabel {
+    margin-bottom: 10px;
+    font-size: 10pt;
+}
+
+.resultCoord {
+    display: flex;
+    background-color: #514a8a;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 11px 10px 2px 10px;
+    border-radius: 5px;
+    vertical-align: middle;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+}
+
+.resultCoord>.object {
+    align-items: flex-start;
+    vertical-align: auto;
+    font-size: 9pt;
+    width: 70%;
+    font-weight: bold;
+}
+
+.resultCoord>.status {
+    align-items: flex-end;
+    width: 30%;
+    text-align: right;
+    cursor: pointer;
+
+
+}
+
+.checklist {
+    display: flex;
+    background-color: #2B255C;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 11px 10px 2px 10px;
+    border-radius: 5px;
+    vertical-align: middle;
+}
+
+.checklist>.object {
+    align-items: flex-start;
+    vertical-align: auto;
+    font-size: 9pt;
+    width: 70%;
+    font-weight: bold;
+}
+
+.checklist>.status {
+    align-items: flex-end;
+    width: 30%;
+    text-align: right;
+
+}
+
+.info-card {
+    padding: 10px;
+    margin: 15px 0px 15px 0px;
+    background: #FFFFFF;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+    border-radius: 10px;
+}
+
+
+/* item  */
+.item {
+    display: flex;
+    margin: 15px 0px 15px 0px;
+}
+
+.item>.object {
+    width: 70%;
+    font-weight: 600;
+    font-size: 10pt;
+    display: flex;
+}
+
+.item>.object>span {
+    padding: 8px 6px 8px 6px;
+    background-color: #D04242;
+    color: white;
+    border-radius: 7px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.item>.distance {
+    font-size: 11pt;
+    width: 30%;
+    text-align: right;
+}
+
+.item>.object>.transit-object {
+    flex-wrap: wrap;
+    margin-left: 7px;
+}
+
+.item>.object>.transit-object>.service {
+    font-weight: 400;
+}
+
+/*
+ *  STYLE 7
+ */
+
+#info::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+}
+
+#info::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(255, 255, 255, 0.04);
+
+}
+
+#info::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(49, 42, 101, 0) 0%, rgba(49, 42, 101, 0.32) 100%);
+}
+
+/* tooltip */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 110%;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* end tooltip */
+
+#message {
+    font-size: 11pt;
+}
+
+/* input */
+input[type=text] {
+    width: 100%;
+    height: 50px;
+    padding-left: 45px;
+    margin: auto;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    color: #FFFFFF;
+    background-color: #3c3377;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12pt;
+}
+
+input[type=text]:focus {
+    outline: none;
+    background-color: #4a3dad;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291);
+
+}
+
+input[type=text]::placeholder {
+    color: #ffffff8e
+}
+
+.searchIcon {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    line-height: 65px;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    color: #FFFFFF;
+    background-color: #ff5e61;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #fa7476;
+}
+
+button:active {
+    background-color: #fd595b;
+}
